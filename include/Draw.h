@@ -9,7 +9,8 @@ class Draw
         Draw();
         virtual ~Draw();
         void loadAll();
-        void printMainMenu();
+        void printMainMenuImage();
+        void printMainMenuText();
     protected:
     private:
 };

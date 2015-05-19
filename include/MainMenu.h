@@ -11,7 +11,7 @@ class MainMenu: public GameScreen
         MainMenu(Draw drawer);
         virtual ~MainMenu();
         void update(std::string input);
-        void executeInput(std::string input);
+        bool executeInput(std::string input);
     protected:
     private:
 };

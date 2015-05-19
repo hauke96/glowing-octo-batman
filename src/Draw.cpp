@@ -26,8 +26,12 @@ void Draw::loadAll()
     }
 }
 
-void Draw::printMainMenu()
+void Draw::printMainMenuImage()
 {
     std::cout << _titleImage << std::endl;
-    std::cout << "Type S T A R T to start the game." << std::endl;
+}
+
+void Draw::printMainMenuText()
+{
+    std::cout << "Type S T A R T to start the game." << std::endl << "If you want to know what glowing-octo-batman is type W T F." << std::endl;
 }
