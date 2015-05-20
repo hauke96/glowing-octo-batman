@@ -4,13 +4,16 @@
 
 class Draw
 {
-        std::string _titleImage;
+        std::string _titleImage,
+            _map_raw,
+            _map_processed;
     public:
         Draw();
         virtual ~Draw();
         void loadAll();
         void printMainMenuImage();
         void printMainMenuText();
+        void printMap();
     protected:
     private:
 };

@@ -1,7 +1,7 @@
 #include "GameScreen.h"
 #include <string>
 
-GameScreen::GameScreen()
+GameScreen::GameScreen(GameManager gameManager)
 {
     //ctor
 }

@@ -6,14 +6,13 @@
 
 class MainMenu: public GameScreen
 {
-        Draw _drawer;
     public:
-        MainMenu(Draw drawer);
+        MainMenu(Draw drawer, GameManager *gameManager);
         virtual ~MainMenu();
         void update(std::string input);
-        bool executeInput(std::string input);
     protected:
     private:
+        bool executeInput(std::string input);
 };
 
 #endif // MAINMENU_H

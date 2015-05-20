@@ -1,22 +1,16 @@
-#ifdef __WIN32__
-    #define OS "MS Windows"
-#elif __linux__
-    #define OS "Linux"
-#elif __APPLE__
-    #define OS "Apple"
-#elif __unix__
-    #define OS "UNIX"
-#endif
 #include <iostream>
 #include "MainMenu.h"
 #include <regex>
 #include <GameScreen.h>
+#include <GameManager.h>
+#include <MapViewer.h>
 
-MainMenu::MainMenu(Draw drawer)
+MainMenu::MainMenu(Draw drawer, GameManager *gameManager) : GameScreen::GameScreen(*gameManager)
 {
     _drawer = drawer;
     _drawer.printMainMenuImage();
     _drawer.printMainMenuText();
+    _gameManager = gameManager;
 }
 
 MainMenu::~MainMenu()
@@ -26,7 +20,6 @@ MainMenu::~MainMenu()
 
 void MainMenu::update(std::string input)
 {
-    if(OS == "Linux")system("clear");
     _drawer.printMainMenuImage();
 
     if(!executeInput(input)) _drawer.printMainMenuText();
@@ -41,8 +34,9 @@ bool MainMenu::executeInput(std::string input)
 
     if(std::regex_match(input, start_expr))
     {
-        std::cout << "Spiel startet ... 3 ... 2 ... 1 ... BRRRRR" << std::endl << "ERROR 0x00000000cafebabe" << std::endl;
-        executedInput = true;
+        MapViewer *mapView = new MapViewer(_drawer, _gameManager);
+        _gameManager->changeGameScreen(mapView);
+//        delete *mapView;
     }
     else if(std::regex_match(input, wtf_expr))
     {
