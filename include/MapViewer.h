@@ -7,6 +7,7 @@
 class MapViewer: public GameScreen
 {
         int _selectedField;
+        char _selectedFieldChar;
         std::string _mapGraphics[5][3];
 
     public:
@@ -18,6 +19,7 @@ class MapViewer: public GameScreen
         bool executeInput(std::string input);
         void renderImage();
         std::string getRowOf(char field, int row);
+        std::string getFieldDescription(char field);
 };
 
 #endif // MAPVIEWER_H

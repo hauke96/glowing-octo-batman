@@ -49,7 +49,8 @@ std:: string GameManager::readLine()
 {
     std::string str;
     std::cout << std::endl << "~$> ";
-    std::cin >> str;
+    std::getline(std::cin, str);
+    //std::cin >> str;
     return str;
 }
 
