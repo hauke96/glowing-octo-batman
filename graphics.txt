@@ -1,6 +1,6 @@
 TREE:
   symbol : w
-  graphic: 
+  graphic:
 ┌─────┐
 │ ↟↟  │
 │ ↟ ↟ │
@@ -9,7 +9,7 @@ TREE:
 
 LAND:
   symbol : l
-  graphic: 
+  graphic:
 ┌─────┐
 │   ` │
 │ '   │
@@ -18,13 +18,31 @@ LAND:
 
 VILLAGE:
   symbol : v
-  graphic: 
+  graphic:
 ┌─────┐
 │  ⌂  │
 │  ⤊⌂ │
 │ ⌂⌂  │
 └─────┘
- 
+
+WATER:
+  symbol : w
+  graphic:
+┌─────┐
+│ ~~~ │
+│ ~~~ │
+│ ~~~ │
+└─────┘
+
+MOUNTAIN:
+  symbol : m
+  graphic:
+┌─────┐
+│  ʌ  │
+│ /ʌ\ │
+│ / \ │
+└─────┘
+
 
 MAP:
   wwwwwlllww
@@ -44,8 +62,8 @@ SYMBOL POOL:
 
 TEMPLATE:
 
-  symbol : 
-  graphic: 
+  symbol :
+  graphic:
 ┌─────┐
 │     │
 │     │

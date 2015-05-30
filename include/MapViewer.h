@@ -6,6 +6,9 @@
 
 class MapViewer: public GameScreen
 {
+        int _selectedField;
+        std::string _mapGraphics[5][3];
+
     public:
         MapViewer(Draw drawer, GameManager *gameManager);
         virtual ~MapViewer();
@@ -13,6 +16,8 @@ class MapViewer: public GameScreen
     protected:
     private:
         bool executeInput(std::string input);
+        void renderImage();
+        std::string getRowOf(char field, int row);
 };
 
 #endif // MAPVIEWER_H
