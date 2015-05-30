@@ -1,0 +1,54 @@
+TREE:
+  symbol : w
+  graphic: 
+┌─────┐
+│ ↟↟  │
+│ ↟ ↟ │
+│ ↟↟↟ │
+└─────┘
+
+LAND:
+  symbol : l
+  graphic: 
+┌─────┐
+│   ` │
+│ '   │
+│  .  │
+└─────┘
+
+VILLAGE:
+  symbol : v
+  graphic: 
+┌─────┐
+│  ⌂  │
+│  ⤊⌂ │
+│ ⌂⌂  │
+└─────┘
+ 
+
+MAP:
+  wwwwwlllww
+  wwwvlffmfl
+  wlllffmmff
+  lfmmmmffmf
+  ffmmfffmmf
+  lffffllffl
+  lllvlflfvl
+  llllffllll
+  lllffllffl
+  llllffflll
+
+
+SYMBOL POOL:
+─┘┐┌└│
+
+TEMPLATE:
+
+  symbol : 
+  graphic: 
+┌─────┐
+│     │
+│     │
+│     │
+└─────┘
+
