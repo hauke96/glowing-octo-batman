@@ -52,24 +52,32 @@ void MapViewer::update(std::string input)
 bool MapViewer::executeInput(std::string input)
 {
     bool executedInput = false;
-    std::regex walk_expr("((go|move)|walk)( )((((right|top)|up)|down)|left)");
+    std::regex walk_expr("((go|move)|walk)( )((((((((right|top)|up)|down)|left)|(w|W)est)|(e|E)ast)|(s|S)outh)|(n|N)orth)");
 
     if(std::regex_match(input, walk_expr))
     {
-        if(input.find("left") != std::string::npos)
+        if(input.find("left") != std::string::npos
+            || input.find("west") != std::string::npos
+            || input.find("West") != std::string::npos)
         {
             if(_selectedField % 10 != 0) _selectedField--;
         }
-        else if(input.find("right") != std::string::npos)
+        else if(input.find("right") != std::string::npos
+            || input.find("east") != std::string::npos
+            || input.find("East") != std::string::npos)
         {
             if(_selectedField % 10 != 9) _selectedField++;
         }
         else if(input.find("top") != std::string::npos
-            || input.find("up") != std::string::npos)
+            || input.find("up") != std::string::npos
+            || input.find("north") != std::string::npos
+            || input.find("North") != std::string::npos)
         {
             if(_selectedField >= 10) _selectedField -= 10;
         }
-        else if(input.find("down") != std::string::npos)
+        else if(input.find("down") != std::string::npos
+            || input.find("south") != std::string::npos
+            || input.find("South") != std::string::npos)
         {
             if(_selectedField < 60) _selectedField += 10;
         }
