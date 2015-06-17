@@ -37,6 +37,15 @@ MapViewer::~MapViewer()
     //dtor
 }
 
+/** \brief Updates the MapViewer.
+ *          It gives an suitable output based on the users input, writes an title into the screen
+ *          and executed the map render mathod.
+ *          It also displays an description of the current map field, the player is standing on.
+ *
+ * \param input std::string The users input.
+ * \return void
+ *
+ */
 void MapViewer::update(std::string input)
 {
     executeInput(input);
@@ -49,6 +58,12 @@ void MapViewer::update(std::string input)
     std::cout << "You are " << getFieldDescription(_selectedFieldChar) << std::endl;
 }
 
+/** \brief Analyses the input of the user. If it matches with an RegEx, the fitting action will be executed.
+ *
+ * \param input std::string The users input.
+ * \return bool True if something has been executed.
+ *
+ */
 bool MapViewer::executeInput(std::string input)
 {
     bool executedInput = false;
@@ -78,6 +93,11 @@ bool MapViewer::executeInput(std::string input)
     return false;
 }
 
+/** \brief Renders the map with all its fanciness.
+ *
+ * \return void
+ *
+ */
 void MapViewer::renderImage()
 {
     // ─ ┘ ┐ ┌ └ │ ┬ ├ ┤ ┴ ┼
@@ -205,6 +225,13 @@ void MapViewer::renderImage()
     std::cout << output;
 }
 
+/** \brief Returns a specific row of an image (e.g. village or forest).
+ *
+ * \param field char The field char (v for village, f for forest, ...).
+ * \param row int The row of the image (between 0 and 2).
+ * \return std::string The row as string.
+ *
+ */
 std::string MapViewer::getRowOf(char field, int row)
 {
     if(row < 0 || row > 2) return "     ";
@@ -224,6 +251,12 @@ std::string MapViewer::getRowOf(char field, int row)
     return "     ";
 }
 
+/** \brief Returns an description of the field the player stand on.
+ *
+ * \param field char The field char (v, f, ...).
+ * \return std::string The description.
+ *
+ */
 std::string MapViewer::getFieldDescription(char field)
 {
     switch(field)

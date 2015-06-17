@@ -12,6 +12,11 @@ Draw::~Draw()
     //dtor
 }
 
+/** \brief Loads all image and map files.
+ *
+ * \return void
+ *
+ */
 void Draw::loadAll()
 {
     std::string line;
@@ -48,16 +53,31 @@ void Draw::loadAll()
     }
 }
 
+/** \brief Prints the image of the main menu onto the screen.
+ *
+ * \return void
+ *
+ */
 void Draw::printMainMenuImage()
 {
     std::cout << _titleImage << std::endl;
 }
 
+/** \brief Prints the text of the main menu.
+ *
+ * \return void
+ *
+ */
 void Draw::printMainMenuText()
 {
     std::cout << "Type S T A R T to start the game." << std::endl << "If you want to know what glowing-octo-batman is type W T F." << std::endl;
 }
 
+/** \brief Returns the raw map with its field chars.
+ *
+ * \return std::string The raw map.
+ *
+ */
 std::string Draw::getRawMap()
 {
     return _map_raw;
