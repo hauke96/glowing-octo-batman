@@ -5,6 +5,12 @@
 #include <GameManager.h>
 #include <MapViewer.h>
 
+/** \brief Creates the main menu.
+ *
+ * \param drawer Draw The drawer reference.
+ * \param gameManager GameManager* The pointer to a game manager.
+ *
+ */
 MainMenu::MainMenu(Draw drawer, GameManager *gameManager) : GameScreen::GameScreen(*gameManager)
 {
     _drawer = drawer;

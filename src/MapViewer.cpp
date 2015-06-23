@@ -3,7 +3,14 @@
 #include <iostream>
 #include <algorithm>
 #include <regex>
+#include <SubMapViewer_Village.h>
 
+/** \brief Creates the map viewer.
+ *
+ * \param drawer Draw The drawer reference.
+ * \param gameManager GameManager* The pointer to a game manager.
+ *
+ */
 MapViewer::MapViewer(Draw drawer, GameManager *gameManager) : GameScreen::GameScreen(*gameManager)
 {
     _drawer = drawer;
@@ -39,7 +46,7 @@ MapViewer::~MapViewer()
 
 /** \brief Updates the MapViewer.
  *          It gives an suitable output based on the users input, writes an title into the screen
- *          and executed the map render mathod.
+ *          and executed the map render method.
  *          It also displays an description of the current map field, the player is standing on.
  *
  * \param input std::string The users input.
@@ -55,7 +62,8 @@ void MapViewer::update(std::string input)
     std::cout << "║ THE HOLY KINGDOM \033[4m\033[1mMODGNI KYLOH EHT\033[0m: ║" << std:: endl;
     std::cout << "╙────────────────────────────────────╜" << std::endl;
     renderImage();
-    std::cout << "You are " << getFieldDescription(_selectedFieldChar) << std::endl;
+    std::cout << "You are " << getFieldDescription(_selectedFieldChar);
+    std::cout << " You can E N T E R this area." << std::endl;
 }
 
 /** \brief Analyses the input of the user. If it matches with an RegEx, the fitting action will be executed.
@@ -68,6 +76,7 @@ bool MapViewer::executeInput(std::string input)
 {
     bool executedInput = false;
     std::regex walk_expr("((go|move)|walk)( )((((((((right|top)|up)|down)|left)|(w|W)est)|(e|E)ast)|(s|S)outh)|(n|N)orth)");
+    std::regex enter_expr("(((e|E)nter)|(ENTER))");
 
     if(std::regex_match(input, walk_expr))
     {
@@ -97,6 +106,11 @@ bool MapViewer::executeInput(std::string input)
             if(_selectedField < 60) _selectedField += 10;
         }
         _selectedFieldChar = _drawer.getRawMap().at(_selectedField + (_selectedField / 10));
+    }
+    else if(std::regex_match(input, enter_expr))
+    {
+        SubMapViewer_Village *smv_village = new SubMapViewer_Village(_drawer, _gameManager);
+        _gameManager->changeGameScreen(smv_village);
     }
     return false;
 }
