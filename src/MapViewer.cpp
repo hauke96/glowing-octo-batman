@@ -129,9 +129,15 @@ void MapViewer::renderImage()
 
     // ┡ ┢ ┩ ┪ ┱ ┲ ┹ ┺ ╃ ╄ ╅ ╆
 
-    //UNDERLINE: \033[4m
-    //BOLD:      \033[1m
-    //NOTHING:   \033[0m
+    // UNDERLINE  : \033[4m
+    // BOLD       : \033[1m
+    // NOTHING    : \033[0m
+
+	// DARK GREEN : \033[32m
+    // LIGHT GREEN: \033[36m
+	// BROWN      : \033[33m
+	// BLUE       : \033[34m
+	// GRAY       : \033[37m
 
     std::string output = "",
         rawMap = _drawer.getRawMap(),
@@ -229,10 +235,35 @@ void MapViewer::renderImage()
             }
             else
             {
-                if((row / 4) * 10 + col == _selectedField || (row / 4) * 10 + col - 1 == _selectedField && _selectedField % 10 != 9) output += "\033[31m┃\033[0m"; // this or the previous row
+                if((row / 4) * 10 + col == _selectedField || ((row / 4) * 10 + col - 1 == _selectedField && _selectedField % 10 != 9)) output += "\033[31m┃\033[0m"; // this or the previous row
                 else output += "│";
 
+            	// DARK GREEN : \033[32m
+                // LIGHT GREEN: \033[36m
+            	// BROWN      : \033[33m
+            	// BLUE       : \033[34m
+            	// GRAY       : \033[37m
+
+                switch(rawRow.at(col))
+                {
+                case 'f':
+                	output += "\033[32m";
+                	break;
+                case 'l':
+                	output += "\033[1;32m";
+                	break;
+                case 'v':
+                	output += "\033[33m";
+                	break;
+                case 'w':
+                	output += "\033[34m";
+                	break;
+                case 'm':
+                	output += "\033[1;37m";
+                }
+
                 output += getRowOf(rawRow.at(col), row % 4 - 1);
+                output += "\033[0m";
 
                 if(col == amountCols - 1)
                 {
