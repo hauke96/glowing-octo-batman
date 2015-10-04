@@ -74,9 +74,11 @@ void MapViewer::update(std::string input)
  */
 bool MapViewer::executeInput(std::string input)
 {
+    if(input == "") return false;
     bool executedInput = false;
-    std::regex walk_expr("((go|move)|walk)( )((((((((right|top)|up)|down)|left)|(w|W)est)|(e|E)ast)|(s|S)outh)|(n|N)orth)");
-    std::regex enter_expr("(((e|E)nter)|(ENTER))");
+
+    std::regex walk_expr("(go|move|walk)( )(right|top|up|down|left|(w|W)est|(e|E)ast|(s|S)outh|(n|N)orth)");
+    std::regex enter_expr("(e|E)nter|ENTER");
 
     if(std::regex_match(input, walk_expr))
     {
@@ -146,7 +148,6 @@ void MapViewer::renderImage()
         }
         for(int col = 0; col < amountCols; col++)
         {
-            //if((row - 1) / 5 == _selectedField)
             if(row % 4 == 0) // lines between fields
             {
                 if(col == 0) // first col
