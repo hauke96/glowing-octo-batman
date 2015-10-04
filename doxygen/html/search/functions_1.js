@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getrawmap',['getRawMap',['../class_draw.html#a56b12d568d8a4dee50777b61e20997e4',1,'Draw']]]
+  ['draw',['Draw',['../class_draw.html#a7c808e2194e8659b401584773e26730e',1,'Draw']]]
 ];

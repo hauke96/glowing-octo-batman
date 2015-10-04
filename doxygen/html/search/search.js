@@ -7,16 +7,20 @@
 
 var indexSectionsWithContent =
 {
-  0: "cdglmpsu",
-  1: "dgm",
-  2: "cglpsu"
+  0: "_cdeglmprsu~",
+  1: "dgms",
+  2: "dgms",
+  3: "cdeglmprsu~",
+  4: "_"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "functions"
+  2: "files",
+  3: "functions",
+  4: "variables"
 };
 
 function convertToId(search)

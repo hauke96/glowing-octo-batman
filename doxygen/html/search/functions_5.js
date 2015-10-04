@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['update',['update',['../class_main_menu.html#a61925a6a76d2bbe693c97c03680830b7',1,'MainMenu::update()'],['../class_map_viewer.html#a95dfa694f8950d46fb904dca62158f38',1,'MapViewer::update()']]]
+  ['mainmenu',['MainMenu',['../class_main_menu.html#acd561659e81f1194175429f1a8dcad0b',1,'MainMenu']]],
+  ['mapviewer',['MapViewer',['../class_map_viewer.html#aec1d8fe1bbc6f94585ac2a775754cc8d',1,'MapViewer']]]
 ];

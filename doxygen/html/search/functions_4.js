@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['start',['start',['../class_game_manager.html#a8460b2f4f44c19dd405e4163fe6cb5cf',1,'GameManager']]]
+  ['loadall',['loadAll',['../class_draw.html#a2b71fb091ca3279f1e29e89a21ae8572',1,'Draw']]]
 ];
