@@ -6,6 +6,7 @@
     #define OS "Apple"
 #endif
 #include "iostream"
+#include <cstdlib>
 #include "GameManager.h"
 #include <GameScreen.h>
 #include <MainMenu.h>

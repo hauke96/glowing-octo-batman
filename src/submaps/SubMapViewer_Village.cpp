@@ -1,4 +1,4 @@
-#include "SubMapViewer_Village.h"
+#include <SubMapViewer_Village.h>
 #include <iostream>
 
 /** \brief Creates a SubMapViewer for the village

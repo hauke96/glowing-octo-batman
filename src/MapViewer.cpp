@@ -56,8 +56,7 @@ MapViewer::~MapViewer()
 void MapViewer::update(std::string input)
 {
     executeInput(input);
-    std::cout << "OK" << std::endl;
-    //_drawer.printMap();
+
     std::cout << "╓────────────────────────────────────╖" << std::endl;
     std::cout << "║ THE HOLY KINGDOM \033[4m\033[1mMODGNI KYLOH EHT\033[0m: ║" << std:: endl;
     std::cout << "╙────────────────────────────────────╜" << std::endl;
