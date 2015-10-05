@@ -20,7 +20,5 @@ int main()
 
     GameManager _gameManager;
     _gameManager.start();
-	std::string v;
-	std::cin >> v;
     return 0;
 }

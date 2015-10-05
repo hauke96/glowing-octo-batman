@@ -1,0 +1,27 @@
+# This is a comment
+
+# Empty lines will be ignored
+
+# The structure is like this:
+# 
+SentenceName:mystory
+SentenceMessage:               ____\n             .*    *.\n  such      *  *  ,  *      `  '  ´\n  wow      / .      * \   - *glow* -\n          |__  ʌ__ʌ  __|    ,  .  .\n       .~´´ (_/    \_) ``~.\n      /    ___      ___    \\n      |   (░░░)    (░░░)   |\n      \    ‾‾‾_    _‾‾‾    /\n   /|  ``-../´ `..´ `\..-´´  |\\n  |○|    /  ,     '     \    |○|\n  |○\___/      .     ,   \___/○|\n  \○ ○ ○  ..    /\    ..  ○ ○ ○/\n   `─────´ /   /  \   \ `─────´\n          / ○ /    \ ○ \  3octo5you\n|\      .´ ○ /      \ ○ `.      /|\n\○`.__.´○ ○.´        `.○ ○`.__.´○/\n `○__○_○..´            `..○_○__○´
+SentenceNext:optionalAnswers
+#no possible answers -> no number, just the following sentence
+-
+# the - indicates the end of a story
+SentenceName:optionalAnswers
+SentenceMessage:You can choose ...\nwhoose wisely ...
+# The second argument (number) will be displayed in the console
+# This argument must not be "0" (this is the default value for a dialog with no answer options)
+SentenceAnswer:1:Leave me alone
+SentenceAnswer:2:Go away
+SentenceAnswer:3:ok, lets do it again
+SentenceAnswer:4:wisely
+SentenceNext:1:$exit
+SentenceNext:2:$exit
+#to exit a dialog write $exit as next sentence
+#
+SentenceNext:3:optionalAnswers
+SentenceNext:4:mystory
+-

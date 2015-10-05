@@ -19,8 +19,8 @@ GameManager::GameManager()
 	//TODO: Create console-rezizement for win and mac as well
 
 	_drawer.loadAll();
-//	_gameScreen = new MainMenu(_drawer, this);
-	_gameScreen = new StoryView("storyExample", "optionalAnswers", this);
+	_gameScreen = new MainMenu(_drawer, this);
+//	_gameScreen = new StoryView("storyExample", "mystory", this);
 	_newGameScreen = NULL;
 }
 
@@ -39,7 +39,7 @@ void GameManager::start()
 {
 	std::string input = "";
 
-	while(input != "exit")
+	while(input != "exit5")
 	{
 		input = readLine();
 		clearScreen();

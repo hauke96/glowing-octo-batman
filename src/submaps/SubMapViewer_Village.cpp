@@ -10,7 +10,7 @@
  * \param gameManager GameManager* The pointer to a game manager.
  *
  */
-SubMapViewer_Village::SubMapViewer_Village(Draw drawer, GameManager *gameManager) : GameScreen::GameScreen(*gameManager)
+SubMapViewer_Village::SubMapViewer_Village(Draw drawer, GameManager *gameManager)
 {
     _drawer = drawer;
     _gameManager = gameManager;

@@ -1,6 +1,9 @@
+#include <sys/types.h>
 #include <Story.h>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <regex>
 #include <utility>
 
@@ -14,36 +17,93 @@ Story::~Story()
 {
 }
 
+/**
+ * Gets the next sentence.
+ * @return The next gamescreen when the user presses ENTER. If he has to choose between answers, the reult will be the current sentence.
+ */
 std::string Story::getNextText()
 {
-	return "";
+	std::map<std::string, std::string> t;
+	t[_currentSentence] = "0";
+	if(_next[t] == "") return _currentSentence;
+	return _next[t];
 }
 
-void Story::answerChosen(std::string answer)
+/**
+ * This method will give you the next sentence depending on the users answer.
+ * @param answer The answer of the user.
+ * @return The name of the next sentence.
+ */
+std::string Story::answerChosen(std::string answer)
 {
-	std::cout << answer << std::endl;
-	std::cout << _currentSentence << std::endl;
-	std::cout << _answers[_currentSentence][answer] << std::endl;
+	std::vector<std::string> allKeys = getAllAnswerKeys(_currentSentence);
+	if(std::find(allKeys.begin(), allKeys.end(), answer) == allKeys.end()) return _currentSentence; // if input is no answer
+
+//	std::cout << answer << std::endl;
+//	std::cout << _currentSentence << std::endl;
+//	std::cout << _answers[_currentSentence][answer] << std::endl;
 	std::map<std::string, std::string> t;
 	t[_currentSentence] = answer;
-	std::cout << _next[t] << std::endl;
+//	std::cout << _next[t] << std::endl;
+	return _next[t];
+}
+
+/**
+ * This will set the new sentence.
+ * @param nextSentence The new sentence.
+ */
+void Story::setNextText(std::string nextSentence)
+{
+	_currentSentence = nextSentence;
+}
+
+std::string Story::getCurrentSentence()
+{
+	return _currentSentence;
+}
+
+void Story::print()
+{
+	std::cout << _messages[_currentSentence] << std::endl << std::endl;
+	std::vector<std::string> keys = getAllAnswerKeys(_currentSentence);
+	if(keys.size() != 0)
+	{
+		for(int i = 0; i < keys.size(); i++)
+		{
+			std::cout << "  (" << keys.at(i) << ") : "
+					<< _answers[_currentSentence].at(keys.at(i)) << std::endl;
+		}
+		std::cout << std::endl;
+	}
 }
 
 void Story::loadStory(std::string storyName)
 {
 	std::string line;
 	std::ifstream file;
-	file.open(storyName + ".txt");
+	file.open("stories/" + storyName + ".txt");
 	std::regex emptyLine_expr("( *)");
 	if(file.is_open())
 	{
 		std::string sentenceName = "";
 		std::map<std::string, std::string> answerMap;
+		std::map<std::string, std::string> nextMap;
+
 		while(getline(file, line))
 		{
 			if(!std::regex_match(line, emptyLine_expr) && line.front() != '#'
 					&& line != "-")
 			{
+				// Replace all "\n" in the text by the real escape sequence.
+				size_t pos = 0;
+				const std::string old="\\n";
+				while((pos = line.find("\\n", pos)) <= line.size())
+				{
+					line.replace(pos, old.length(), "\n");
+					pos += 1;
+				}
+
+				//Split by ':'
 				std::vector<std::string> parsedLine = Story::splitString(line,
 						':');
 				if(parsedLine.at(0) == "SentenceName" && sentenceName == "")
@@ -96,7 +156,6 @@ void Story::loadStory(std::string storyName)
 						{
 							if(parsedLine.at(1) != "0")
 							{
-								std::map<std::string, std::string> nextMap;
 								nextMap[sentenceName] = parsedLine.at(1);
 								_next[nextMap] = parsedLine.at(2);
 							}
@@ -110,15 +169,15 @@ void Story::loadStory(std::string storyName)
 						}
 						else if(parsedLine.size() == 2)
 						{
-							std::map<std::string, std::string> nextMap;
-							nextMap[sentenceName] = parsedLine.at(1);
-							_next[nextMap] = "";
+							nextMap[sentenceName] = "0";
+							_next[nextMap] = parsedLine.at(1);
 						}
 						else
 						{
 							std::cout << "\033[31m"
 									<< "A next block in the sentence \""
-									<< sentenceName << "\" has a wrong amount of arguments! There must be either 2 or 3 arguments (look into the \"storyExample.txt\" for help.\033[0m"
+									<< sentenceName
+									<< "\" has a wrong amount of arguments! There must be either 2 or 3 arguments (look into the \"storyExample.txt\" for help.\033[0m"
 									<< std::endl << std::endl;
 						}
 					}
@@ -132,7 +191,18 @@ void Story::loadStory(std::string storyName)
 			else if(line == "-")
 			{
 				sentenceName = "";
+				if(answerMap.size() == 0)
+				{
+					answerMap[sentenceName] = "0";
+					_answers[sentenceName] = answerMap;
+				}
+				if(nextMap.size() == 0)
+				{
+					nextMap[sentenceName] = "0";
+					_next[nextMap] = "$exit";
+				}
 				answerMap.clear();
+				nextMap.clear();
 			}
 		}
 		file.close();
@@ -140,8 +210,8 @@ void Story::loadStory(std::string storyName)
 	else
 	{
 		//system("Color 1A"); // WINDOWS
-		std::cout << "\033[31mError while reading file \033[0m"
-				<< "\033[34m\"" << storyName << ".txt\"\033[0m"
+		std::cout << "\033[31mError while reading file \033[0m" << "\033[34m\""
+				<< storyName << ".txt\"\033[0m"
 				<< "\033[31m. Make shure it exists!\033[0m";
 	}
 	checkAnswers();
@@ -152,12 +222,32 @@ void Story::loadStory(std::string storyName)
  */
 void Story::checkAnswers()
 {
+	for(int i = 0; i < _sentences.size(); i++)
+	{
+		std::vector<std::string> allKeys = getAllAnswerKeys(_sentences.at(i));
+
+		for(u_int i = 0; i < allKeys.size(); i++)
+		{
+			std::map<std::string, std::string> tempMap;
+			tempMap[_sentences.at(1)] = allKeys.at(i); //build the map <sentence,answerNumber> for the _next map
+			if(_next.count(tempMap) == 0) //if element does not exist -> element exists in the answers map but not in the next map -> error
+			{
+				std::cout << "\033[31mThe answer \"" << allKeys.at(i)
+						<< "\" has no fitting next block!\033[0m" << std::endl
+						<< std::endl;
+			}
+		}
+	}
+}
+
+std::vector<std::string> Story::getAllAnswerKeys(std::string sentence)
+{
 	std::vector<std::string> allKeys;
 
 	// Put all answer numbers of _sentences.at(...) into one list:
 	for(auto entry : _answers) // go through all answers
 	{
-		if(entry.first != _sentences.at(1)) continue; // if not the wanted answer: ignore
+		if(entry.first != sentence) continue; // if not the wanted answer: ignore
 		std::map<std::string, std::string> t;
 		t = entry.second; // get the map with the numbers and texts for the answers of this sentence
 		for(auto entry2 : t)
@@ -166,19 +256,7 @@ void Story::checkAnswers()
 		}
 	}
 
-	for(u_int i = 0; i < allKeys.size(); i++)
-	{
-		std::map<std::string, std::string> tempMap;
-		tempMap[_sentences.at(1)] = allKeys.at(i); //build the map <sentence,answerNumber> for the _next map
-		if(_next.count(tempMap) == 0) //if element does not exist -> element exists in the answers map but not in the next map -> error
-		{
-			std::cout << "\033[31mThe answer \""
-					<< allKeys.at(i)
-					<< "\" has no fitting next block!\033[0m"
-					<< std::endl
-					<< std::endl;
-		}
-	}
+	return allKeys;
 }
 
 std::vector<std::string> Story::splitString(std::string str, char delimiter)

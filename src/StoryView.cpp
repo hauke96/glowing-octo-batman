@@ -1,10 +1,17 @@
 #include <GameManager.h>
 #include <StoryView.h>
+#include <iostream>
 
-StoryView::StoryView(std::string storyName, std::string firstSentence, GameManager *gameManager):GameScreen::GameScreen(*gameManager)
+/**
+ * Creates a new view for a story.
+ * @param storyName The name of the story (=name of the file with the story)
+ * @param firstSentence The name of the first sentence.
+ * @param gameManager The game manager.
+ */
+StoryView::StoryView(std::string storyName, std::string firstSentence, GameManager *gameManager)
 {
 	_story = new Story(storyName, firstSentence);
-	_story->answerChosen("4");
+	_story->print();
 }
 StoryView::~StoryView()
 {
@@ -12,9 +19,23 @@ StoryView::~StoryView()
 }
 void StoryView::update(string input)
 {
-
+	executeInput(input);
+	_story->print();
 }
 bool StoryView::executeInput(string input)
 {
-
+	std::string next = "";
+	if(input != "")
+	{
+		next = _story->answerChosen(input);
+	}
+	else
+	{
+		next = _story->getNextText();
+	}
+	if(next == "")
+	{
+		notify(); //exit
+	}
+	else if(_story->getCurrentSentence() != next) _story->setNextText(next);
 }

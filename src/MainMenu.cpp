@@ -11,8 +11,7 @@
  * \param gameManager GameManager* The pointer to a game manager.
  *
  */
-MainMenu::MainMenu(Draw drawer, GameManager *gameManager) :
-		GameScreen::GameScreen(*gameManager)
+MainMenu::MainMenu(Draw drawer, GameManager *gameManager)
 {
 	_drawer = drawer;
 	_drawer.printMainMenuImage();
@@ -58,6 +57,9 @@ bool MainMenu::executeInput(std::string input)
 	}
 	else if(std::regex_match(input, wtf_expr))
 	{
+		GameScreen::clearScreen();
+		StoryView wtfStory("wtf", "wtf", _gameManager);
+		wtfStory.update("");
 		std::cout
 				<< "glowing-octo-batman is an ASCII based adventure game written in C++.\nYou have to do stuff in this game."
 				<< std::endl;

@@ -1,7 +1,7 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
-#include <GameScreen.h>
-#include <Draw.h>
+
+#include <StoryView.h>
 #include <string>
 
 class MainMenu: public GameScreen

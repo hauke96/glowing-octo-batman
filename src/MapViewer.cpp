@@ -11,8 +11,7 @@
  * \param gameManager GameManager* The pointer to a game manager.
  *
  */
-MapViewer::MapViewer(Draw drawer, GameManager *gameManager) :
-		GameScreen::GameScreen(*gameManager)
+MapViewer::MapViewer(Draw drawer, GameManager *gameManager)
 {
 	_drawer = drawer;
 	_gameManager = gameManager;
@@ -364,7 +363,6 @@ std::string MapViewer::getFieldDescription(char field)
 
 void MapViewer::notified()
 {
-	std::cout << "OK" << std::endl;
 	_subMap = NULL;
 	_gameManager->changeGameScreen(this);
 }
