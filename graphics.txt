@@ -17,7 +17,7 @@ LAND:
 └─────┘
 
 VILLAGE:
-  symbol : v
+  symbol : 1, 2, 3
   graphic:
 ┌─────┐
 │  ⌂  │

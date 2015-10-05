@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['start',['start',['../class_game_manager.html#a8460b2f4f44c19dd405e4163fe6cb5cf',1,'GameManager']]],
-  ['submapviewer_5fvillage',['SubMapViewer_Village',['../class_sub_map_viewer___village.html#a9445df25a57a6e7b0aaf4688b7337fee',1,'SubMapViewer_Village']]]
+  ['printmainmenuimage',['printMainMenuImage',['../class_draw.html#adefd0dfe2fe0b49f9f0e1fedf75971a9',1,'Draw']]],
+  ['printmainmenutext',['printMainMenuText',['../class_draw.html#a06937d91ea55f1c8cfd2eb1dc6cd4d34',1,'Draw']]]
 ];

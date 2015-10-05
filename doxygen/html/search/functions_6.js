@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['printmainmenuimage',['printMainMenuImage',['../class_draw.html#adefd0dfe2fe0b49f9f0e1fedf75971a9',1,'Draw']]],
-  ['printmainmenutext',['printMainMenuText',['../class_draw.html#a06937d91ea55f1c8cfd2eb1dc6cd4d34',1,'Draw']]]
+  ['mainmenu',['MainMenu',['../class_main_menu.html#acd561659e81f1194175429f1a8dcad0b',1,'MainMenu']]],
+  ['mapviewer',['MapViewer',['../class_map_viewer.html#aec1d8fe1bbc6f94585ac2a775754cc8d',1,'MapViewer']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['submapviewer_5fvillage',['SubMapViewer_Village',['../class_sub_map_viewer___village.html',1,'']]]
+  ['observable',['Observable',['../class_observable.html',1,'']]],
+  ['observer',['Observer',['../class_observer.html',1,'']]]
 ];

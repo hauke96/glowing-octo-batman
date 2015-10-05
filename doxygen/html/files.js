@@ -20,6 +20,13 @@ var files =
     [ "MapViewer.h", "_map_viewer_8h.html", [
       [ "MapViewer", "class_map_viewer.html", "class_map_viewer" ]
     ] ],
+    [ "Observable.cpp", "_observable_8cpp.html", null ],
+    [ "Observable.h", "_observable_8h.html", [
+      [ "Observable", "class_observable.html", "class_observable" ]
+    ] ],
+    [ "Observer.h", "_observer_8h.html", [
+      [ "Observer", "class_observer.html", "class_observer" ]
+    ] ],
     [ "SubMapViewer_Village.cpp", "_sub_map_viewer___village_8cpp.html", null ],
     [ "SubMapViewer_Village.h", "_sub_map_viewer___village_8h.html", [
       [ "SubMapViewer_Village", "class_sub_map_viewer___village.html", "class_sub_map_viewer___village" ]

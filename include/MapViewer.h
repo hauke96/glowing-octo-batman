@@ -1,19 +1,25 @@
 #ifndef MAPVIEWER_H
 #define MAPVIEWER_H
-#include <GameScreen.h>
-#include <string>
-#include <Draw.h>
 
-class MapViewer: public GameScreen
+#include <Observer.h>
+#include <SubMapViewer_Village.h>
+#include <string>
+
+class Draw;
+class GameManager;
+
+class MapViewer: public GameScreen, public Observer
 {
-        int _selectedField;
-        char _selectedFieldChar;
-        std::string _mapGraphics[5][3];
+	int _selectedField;
+	char _selectedFieldChar;
+	std::string _mapGraphics[5][3];
+	SubMapViewer_Village *_subMap;
 
     public:
         MapViewer(Draw drawer, GameManager *gameManager);
         virtual ~MapViewer();
         void update(std::string input);
+        void notified();
     protected:
     private:
         bool executeInput(std::string input);

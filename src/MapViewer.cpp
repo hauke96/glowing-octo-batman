@@ -1,9 +1,9 @@
-#include "MapViewer.h"
 #include <Draw.h>
-#include <iostream>
+#include <GameManager.h>
+#include <MapViewer.h>
 #include <algorithm>
+#include <iostream>
 #include <regex>
-#include <SubMapViewer_Village.h>
 
 /** \brief Creates the map viewer.
  *
@@ -15,6 +15,7 @@ MapViewer::MapViewer(Draw drawer, GameManager *gameManager) : GameScreen::GameSc
 {
     _drawer = drawer;
     _gameManager = gameManager;
+    _subMap = NULL;
     _selectedField = 49; // 0,1,2 \n 4,5,6 \n ...
     _selectedFieldChar = _drawer.getRawMap().at(_selectedField + (_selectedField / 10));
 
@@ -55,6 +56,11 @@ MapViewer::~MapViewer()
  */
 void MapViewer::update(std::string input)
 {
+	if(_subMap != NULL)
+	{
+		_subMap->update(input);
+		return;
+	}
     executeInput(input);
 
     std::cout << "╓────────────────────────────────────╖" << std::endl;
@@ -74,7 +80,6 @@ void MapViewer::update(std::string input)
 bool MapViewer::executeInput(std::string input)
 {
     if(input == "") return false;
-    bool executedInput = false;
 
     std::regex walk_expr("(go|move|walk)( )(right|top|up|down|left|(w|W)est|(e|E)ast|(s|S)outh|(n|N)orth)");
     std::regex enter_expr("(e|E)nter|ENTER");
@@ -110,8 +115,10 @@ bool MapViewer::executeInput(std::string input)
     }
     else if(std::regex_match(input, enter_expr))
     {
-        SubMapViewer_Village *smv_village = new SubMapViewer_Village(_drawer, _gameManager);
-        _gameManager->changeGameScreen(smv_village);
+    	std::cout << "skdfg" << std::endl;
+        _subMap = new SubMapViewer_Village(_drawer, _gameManager);
+        _subMap->attach(this);
+        _gameManager->changeGameScreen(_subMap);
     }
     return false;
 }
@@ -252,7 +259,9 @@ void MapViewer::renderImage()
                 case 'l':
                 	output += "\033[1;32m";
                 	break;
-                case 'v':
+                case '1':
+                case '2':
+                case '3':
                 	output += "\033[33m";
                 	break;
                 case 'w':
@@ -298,7 +307,9 @@ std::string MapViewer::getRowOf(char field, int row)
         return _mapGraphics[2][row];
     case 'f': // forest
         return _mapGraphics[3][row];
-    case 'v': // village
+    case '1': // village
+    case '2': // village
+    case '3': // village
         return _mapGraphics[4][row];
     }
     return "     ";
@@ -322,8 +333,17 @@ std::string MapViewer::getFieldDescription(char field)
         return "climbing on breathtaking mountains.";
     case 'f': // forest
         return "walking through a dark forest.";
-    case 'v': // village
+    case '1': // village
+    case '2': // village
+    case '3': // village
         return "in a peaceful village.";
     }
     return "";
+}
+
+void MapViewer::notified()
+{
+	std::cout << "OK" << std::endl;
+	_subMap = NULL;
+	_gameManager->changeGameScreen(this);
 }

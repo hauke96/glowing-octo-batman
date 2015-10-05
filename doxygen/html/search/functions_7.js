@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['readline',['readLine',['../class_game_manager.html#a6d78fbad506f21c7b865ce76630a107a',1,'GameManager']]],
-  ['renderimage',['renderImage',['../class_map_viewer.html#a4008829505ec6054ae0d712e6952a498',1,'MapViewer']]]
+  ['notified',['notified',['../class_map_viewer.html#a9ec7a2d23f499d385948f436af8ad7ae',1,'MapViewer::notified()'],['../class_observer.html#ab35d6ff969ca6d0126c8a6d6687b7195',1,'Observer::notified()']]],
+  ['notify',['notify',['../class_observable.html#a099bf851e05bb8c1a25e83f2a1389e58',1,'Observable']]]
 ];

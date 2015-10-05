@@ -1,5 +1,8 @@
+#include <Draw.h>
+#include <GameManager.h>
 #include <SubMapViewer_Village.h>
 #include <iostream>
+#include <regex>
 
 /** \brief Creates a SubMapViewer for the village
  *
@@ -11,6 +14,7 @@ SubMapViewer_Village::SubMapViewer_Village(Draw drawer, GameManager *gameManager
 {
     _drawer = drawer;
     _gameManager = gameManager;
+    _isActive = true;
 }
 
 SubMapViewer_Village::~SubMapViewer_Village()
@@ -29,7 +33,7 @@ SubMapViewer_Village::~SubMapViewer_Village()
  */
 void SubMapViewer_Village::update(std::string input)
 {
-
+	executeInput(input);
 }
 
 /** \brief Executes/interpretes the users input.
@@ -40,5 +44,14 @@ void SubMapViewer_Village::update(std::string input)
  */
 bool SubMapViewer_Village::executeInput(std::string input)
 {
+    if(input == "") return false;
 
+    std::regex leave_expr("((l|L)eave)|(go back)");
+
+    if(std::regex_match(input, leave_expr))
+    {
+    	Observable::notify();
+    }
+
+    return true;
 }
