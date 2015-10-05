@@ -18,7 +18,7 @@ void Observable::attach(Observer* observer)
 void Observable::notify()
 {
 	list<Observer*>::iterator iter = observers.begin();
-	for ( ; iter != observers.end(); iter++ )
+	for(; iter != observers.end(); iter++)
 	{
 		(*iter)->notified();
 	}

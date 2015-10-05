@@ -6,13 +6,13 @@
 
 class MainMenu: public GameScreen
 {
-    public:
-        MainMenu(Draw drawer, GameManager *gameManager);
-        virtual ~MainMenu();
-        void update(std::string input);
-    protected:
-    private:
-        bool executeInput(std::string input);
+	public:
+		MainMenu(Draw drawer, GameManager *gameManager);
+		virtual ~MainMenu();
+		void update(std::string input);
+	protected:
+	private:
+		bool executeInput(std::string input);
 };
 
 #endif // MAINMENU_H

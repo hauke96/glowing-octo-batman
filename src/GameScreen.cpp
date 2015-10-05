@@ -3,12 +3,12 @@
 
 GameScreen::GameScreen(GameManager gameManager)
 {
-    //ctor
+	//ctor
 }
 
 GameScreen::~GameScreen()
 {
-    //dtor
+	//dtor
 }
 
 void GameScreen::update(std::string input)
