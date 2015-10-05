@@ -95,7 +95,7 @@ WARN_LOGFILE = "/home/hauke/C++/CodeBlocks/glowing-octo-batman/doxygen/doxygen.l
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT = /home/hauke/C++/glowing-octo-batman/src /home/hauke/C++/glowing-octo-batman/include 
+INPUT = /home/hauke/C++/glowing-octo-batman/src /home/hauke/C++/glowing-octo-batman/include
 INPUT_ENCODING = UTF-8
 FILE_PATTERNS = 
 RECURSIVE = YES
@@ -167,7 +167,7 @@ GENERATE_ECLIPSEHELP = NO
 ECLIPSE_DOC_ID = org.doxygen.Project
 DISABLE_INDEX = NO
 ENUM_VALUES_PER_LINE = 4
-GENERATE_TREEVIEW = YES
+GENERATE_TREEVIEW = NO
 USE_INLINE_TREES = NO
 TREEVIEW_WIDTH = 250
 EXT_LINKS_IN_WINDOW = NO
@@ -175,7 +175,7 @@ FORMULA_FONTSIZE = 10
 FORMULA_TRANSPARENT = YES
 USE_MATHJAX = NO
 MATHJAX_RELPATH = http://www.mathjax.org/mathjax
-SEARCHENGINE = YES
+SEARCHENGINE = NO
 SERVER_BASED_SEARCH = NO
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
