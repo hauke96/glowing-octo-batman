@@ -15,7 +15,7 @@ class MapViewer: public GameScreen, public Observer
 		std::string _mapGraphics[5][3];
 		SubMapViewer_Village *_subMap;
 	public:
-		MapViewer(Draw drawer, GameManager *gameManager);
+		MapViewer(Draw *drawer, GameManager *gameManager);
 		virtual ~MapViewer();
 		void update(std::string input);
 		void notified();

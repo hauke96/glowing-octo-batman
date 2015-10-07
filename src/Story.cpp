@@ -1,15 +1,18 @@
+#include <GameManager.h>
+#include <stddef.h>
 #include <sys/types.h>
 #include <Story.h>
 #include <algorithm>
 #include <fstream>
-#include <iostream>
 #include <iterator>
 #include <regex>
+#include <stdexcept>
 #include <utility>
 
-Story::Story(std::string storyName, std::string firstSentence)
+Story::Story(std::string storyName, std::string firstSentence, GameManager *gameManager)
 {
 	_currentSentence = firstSentence;
+	_gameManager = gameManager;
 	loadStory(storyName);
 }
 
@@ -39,12 +42,12 @@ std::string Story::answerChosen(std::string answer)
 	std::vector<std::string> allKeys = getAllAnswerKeys(_currentSentence);
 	if(std::find(allKeys.begin(), allKeys.end(), answer) == allKeys.end()) return _currentSentence; // if input is no answer
 
-//	std::cout << answer << std::endl;
-//	std::cout << _currentSentence << std::endl;
-//	std::cout << _answers[_currentSentence][answer] << std::endl;
+//	_gameManager->print(answer + "\n");
+//	_gameManager->print(_currentSentence + "\n");
+//	_gameManager->print(_answers[_currentSentence][answer] + "\n");
 	std::map<std::string, std::string> t;
 	t[_currentSentence] = answer;
-//	std::cout << _next[t] << std::endl;
+//	_gameManager->print(_next[t] + "\n");
 	return _next[t];
 }
 
@@ -56,27 +59,34 @@ void Story::setNextText(std::string nextSentence)
 {
 	_currentSentence = nextSentence;
 }
-
+/**
+ * Gets the current sentence of the story.
+ * @return
+ */
 std::string Story::getCurrentSentence()
 {
 	return _currentSentence;
 }
-
+/**
+ * Prints the message of the story.
+ */
 void Story::print()
 {
-	std::cout << _messages[_currentSentence] << std::endl << std::endl;
+	_gameManager->printText(_messages[_currentSentence] + std::string("\n\n"));
 	std::vector<std::string> keys = getAllAnswerKeys(_currentSentence);
 	if(keys.size() != 0)
 	{
 		for(int i = 0; i < keys.size(); i++)
 		{
-			std::cout << "  (" << keys.at(i) << ") : "
-					<< _answers[_currentSentence].at(keys.at(i)) << std::endl;
+			_gameManager->printText("  (" + keys.at(i) + ") : " + _answers[_currentSentence].at(keys.at(i)) + "\n");
 		}
-		std::cout << std::endl;
+		_gameManager->printText("\n");
 	}
 }
-
+/**
+ * Load a story. The story has to be a .txt file and the extension must not be part of the parameter.
+ * @param storyName The name of the story.
+ */
 void Story::loadStory(std::string storyName)
 {
 	std::string line;
@@ -91,12 +101,11 @@ void Story::loadStory(std::string storyName)
 
 		while(getline(file, line))
 		{
-			if(!std::regex_match(line, emptyLine_expr) && line.front() != '#'
-					&& line != "-")
+			if(!std::regex_match(line, emptyLine_expr) && line.front() != '#' && line != "-")
 			{
 				// Replace all "\n" in the text by the real escape sequence.
 				size_t pos = 0;
-				const std::string old="\\n";
+				const std::string old = "\\n";
 				while((pos = line.find("\\n", pos)) <= line.size())
 				{
 					line.replace(pos, old.length(), "\n");
@@ -104,8 +113,24 @@ void Story::loadStory(std::string storyName)
 				}
 
 				//Split by ':'
-				std::vector<std::string> parsedLine = Story::splitString(line,
-						':');
+				std::vector<std::string> parsedLine = Story::splitString(line, ':');
+				try // in the message can appear more ':' so repear these "errors":
+				{
+					if(parsedLine.at(0) == "SentenceMessage")
+					{
+						std::vector<std::string> temp(2);
+						temp.at(0) = parsedLine.at(0);
+						temp.at(1) = parsedLine.at(1);
+						for(int i = 2; i < parsedLine.size(); i++)
+						{
+							temp.at(1) += ':' + parsedLine.at(i);
+						}
+						parsedLine = temp;
+					}
+				}
+				catch(std::out_of_range) // happens when no ':' appeared in the line which can happen, so just do nothing
+				{
+				}
 				if(parsedLine.at(0) == "SentenceName" && sentenceName == "")
 				{
 					_sentences.push_back(parsedLine.at(1));
@@ -115,8 +140,7 @@ void Story::loadStory(std::string storyName)
 				{
 					if(parsedLine.at(0) == "SentenceName")
 					{
-						std::cout << "\033[31mStructure of " << storyName
-								<< ".txt invalid!\033[0m" << std::endl;
+						_gameManager->printText("\033[31mStructure of " + storyName + ".txt invalid!\033[0m" + "\n");
 					}
 					else if(parsedLine.at(0) == "SentenceMessage")
 					{
@@ -126,11 +150,8 @@ void Story::loadStory(std::string storyName)
 						}
 						else
 						{
-							std::cout << "\033[31m"
-									<< "There is more than one message in the \""
-									<< sentenceName
-									<< "\" sentence. This is not allowed!\033[0m"
-									<< std::endl << std::endl;
+							_gameManager->printText(
+								"\033[31mThere is more than one message in the \"" + sentenceName + std::string("\" sentence. This is not allowed!\033[0m\n\n"));
 						}
 					}
 					else if(parsedLine.at(0) == "SentenceAnswer")
@@ -142,12 +163,9 @@ void Story::loadStory(std::string storyName)
 						}
 						else
 						{
-							std::cout << "\033[31m"
-									<< "There is a wrong amount of arguments in one answer block of the \""
-									<< sentenceName << "\" sentence!"
-									<< std::endl
-									<< "There must be 3 arguments (look into the \"storyExample.txt\" for help.\033[0m"
-									<< std::endl << std::endl;
+							_gameManager->printText(
+								"\033[31mThere is a wrong amount of arguments in one answer block of the \"" + sentenceName
+									+ std::string("\" sentence!\nThere must be 3 arguments (look into the \"storyExample.txt\" for help.\033[0m\n\n"));
 						}
 					}
 					else if(parsedLine.at(0) == "SentenceNext")
@@ -161,10 +179,9 @@ void Story::loadStory(std::string storyName)
 							}
 							else
 							{
-								std::cout << "\033[31m"
-										<< "The second argument in answer block must not be \"0\"! Have a look in the \""
-										<< sentenceName << "\" sentence!"
-										<< std::endl << std::endl;
+								_gameManager->printText(
+									"\033[31mThe second argument in answer block must not be \"0\"! Have a look in the \"" + sentenceName
+										+ std::string("\" sentence!\n\n"));
 							}
 						}
 						else if(parsedLine.size() == 2)
@@ -174,17 +191,15 @@ void Story::loadStory(std::string storyName)
 						}
 						else
 						{
-							std::cout << "\033[31m"
-									<< "A next block in the sentence \""
-									<< sentenceName
-									<< "\" has a wrong amount of arguments! There must be either 2 or 3 arguments (look into the \"storyExample.txt\" for help.\033[0m"
-									<< std::endl << std::endl;
+							_gameManager->printText(
+								"\033[31mA next block in the sentence \"" + sentenceName
+									+ std::string(
+										"\" has a wrong amount of arguments! There must be either 2 or 3 arguments (look into the \"storyExample.txt\" for help.\033[0m\n\n"));
 						}
 					}
 					else
 					{
-						std::cout << "\033[31m" << "Unknown block: \"" << line
-								<< "\"\033[0m" << std::endl << std::endl;
+						_gameManager->printText("\033[31mUnknown block: \"" + line + std::string("\"\033[0m\n\n"));
 					}
 				}
 			}
@@ -210,9 +225,7 @@ void Story::loadStory(std::string storyName)
 	else
 	{
 		//system("Color 1A"); // WINDOWS
-		std::cout << "\033[31mError while reading file \033[0m" << "\033[34m\""
-				<< storyName << ".txt\"\033[0m"
-				<< "\033[31m. Make shure it exists!\033[0m";
+		_gameManager->printText("\033[31mError while reading file \033[0m\033[34m\"" + storyName + std::string(".txt\"\033[0m\033[31m. Make shure it exists!\033[0m"));
 	}
 	checkAnswers();
 }
@@ -232,14 +245,16 @@ void Story::checkAnswers()
 			tempMap[_sentences.at(1)] = allKeys.at(i); //build the map <sentence,answerNumber> for the _next map
 			if(_next.count(tempMap) == 0) //if element does not exist -> element exists in the answers map but not in the next map -> error
 			{
-				std::cout << "\033[31mThe answer \"" << allKeys.at(i)
-						<< "\" has no fitting next block!\033[0m" << std::endl
-						<< std::endl;
+				_gameManager->printText("\033[31mThe answer \"" + allKeys.at(i) + "\" has no fitting next block!\033[0m" + "\n" + "\n");
 			}
 		}
 	}
 }
-
+/**
+ * Gets a list of all answer keys in the given sentence.
+ * @param sentence The sentence which answers you want to know.
+ * @return The list of answers.
+ */
 std::vector<std::string> Story::getAllAnswerKeys(std::string sentence)
 {
 	std::vector<std::string> allKeys;
@@ -258,7 +273,12 @@ std::vector<std::string> Story::getAllAnswerKeys(std::string sentence)
 
 	return allKeys;
 }
-
+/**
+ * Splits a string by the given delimiter.
+ * @param str The string.
+ * @param delimiter The delimiter to split by.
+ * @return All parts after splitting.
+ */
 std::vector<std::string> Story::splitString(std::string str, char delimiter)
 {
 	std::vector<std::string> result;

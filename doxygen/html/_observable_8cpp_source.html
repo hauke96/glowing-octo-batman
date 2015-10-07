@@ -36,6 +36,7 @@
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 <div id="nav-path" class="navpath">
@@ -61,7 +62,7 @@
 <div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_observable.html#a099bf851e05bb8c1a25e83f2a1389e58">   18</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_observable.html#a099bf851e05bb8c1a25e83f2a1389e58">Observable::notify</a>()</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        list&lt;Observer*&gt;::iterator iter = observers.begin();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">for</span> ( ; iter != observers.end(); iter++ )</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">for</span>(; iter != observers.end(); iter++)</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                (*iter)-&gt;notified();</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
@@ -73,7 +74,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 5 2015 03:25:33 for glowing-octo-batman by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 7 2015 06:15:58 for glowing-octo-batman by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

@@ -11,13 +11,13 @@
  * \param gameManager GameManager* The pointer to a game manager.
  *
  */
-MapViewer::MapViewer(Draw drawer, GameManager *gameManager)
+MapViewer::MapViewer(Draw *drawer, GameManager *gameManager)
 {
 	_drawer = drawer;
 	_gameManager = gameManager;
 	_subMap = NULL;
 	_selectedField = 49; // 0,1,2 \n 4,5,6 \n ...
-	_selectedFieldChar = _drawer.getRawMap().at(
+	_selectedFieldChar = _drawer->getRawMap().at(
 			_selectedField + (_selectedField / 10));
 
 	_mapGraphics[0][0] = " ~~~ ";
@@ -64,13 +64,12 @@ void MapViewer::update(std::string input)
 	}
 	executeInput(input);
 
-	std::cout << "╓────────────────────────────────────╖" << std::endl;
-	std::cout << "║ THE HOLY KINGDOM \033[4m\033[1mMODGNI KYLOH EHT\033[0m: ║"
-			<< std::endl;
-	std::cout << "╙────────────────────────────────────╜" << std::endl;
+	_gameManager->print("╓────────────────────────────────────╖\n");
+	_gameManager->print("║ THE HOLY KINGDOM \033[4m\033[1mMODGNI KYLOH EHT\033[0m: ║\n");
+	_gameManager->print("╙────────────────────────────────────╜\n");
 	renderImage();
-	std::cout << "You are " << getFieldDescription(_selectedFieldChar);
-	std::cout << " You can E N T E R this area." << std::endl;
+	_gameManager->printText("You are " + getFieldDescription(_selectedFieldChar));
+	_gameManager->printText(" You can E N T E R this area.\n");
 }
 
 /** \brief Analyses the input of the user. If it matches with an RegEx, the fitting action will be executed.
@@ -114,12 +113,11 @@ bool MapViewer::executeInput(std::string input)
 		{
 			if(_selectedField < 60) _selectedField += 10;
 		}
-		_selectedFieldChar = _drawer.getRawMap().at(
+		_selectedFieldChar = _drawer->getRawMap().at(
 				_selectedField + (_selectedField / 10));
 	}
 	else if(std::regex_match(input, enter_expr))
 	{
-		std::cout << "skdfg" << std::endl;
 		_subMap = new SubMapViewer_Village(_drawer, _gameManager);
 		_subMap->attach(this);
 		_gameManager->changeGameScreen(_subMap);
@@ -144,14 +142,15 @@ void MapViewer::renderImage()
 	// BOLD       : \033[1m
 	// NOTHING    : \033[0m
 
+	// ROT        : \033[31m
 	// DARK GREEN : \033[32m
-	// LIGHT GREEN: \033[36m
 	// BROWN      : \033[33m
 	// BLUE       : \033[34m
+	// LIGHT GREEN: \033[36m
 	// GRAY       : \033[37m
 
-	std::string output = "", rawMap = _drawer.getRawMap(), rawRow =
-			_drawer.getRawMap().substr(0, _drawer.getRawMap().find('\n')); // get first row of map.txt
+	std::string output = "", rawMap = _drawer->getRawMap(), rawRow =
+			_drawer->getRawMap().substr(0, _drawer->getRawMap().find('\n')); // get first row of map.txt
 	int amountRows = (std::count(rawMap.begin(), rawMap.end(), '\n')) * 4 + 1,
 			amountCols = rawRow.size();
 
@@ -159,7 +158,7 @@ void MapViewer::renderImage()
 	{
 		if(row % 4 == 0)
 		{
-			rawRow = _drawer.getRawMap().substr((row / 4) * (amountCols + 1),
+			rawRow = _drawer->getRawMap().substr((row / 4) * (amountCols + 1),
 					amountCols); // get first row of map.txt
 		}
 		for(int col = 0; col < amountCols; col++)
@@ -304,7 +303,7 @@ void MapViewer::renderImage()
 		output += "\n";
 	}
 
-	std::cout << output;
+	_gameManager->print(output);
 }
 
 /** \brief Returns a specific row of an image (e.g. village or forest).

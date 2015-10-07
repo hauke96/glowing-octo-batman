@@ -5,15 +5,18 @@
 #include <string>
 #include <vector>
 
+class GameManager;
+
 class Story
 {
-		std::map<std::map<std::string, std::string>, std::string> _next; //<<sentenceName, answerNumber>, nextSentence>
+		std::map<std::map<std::string, std::string>, std::string> _next; //+sentenceName, answerNumber>, nextSentence>
 		std::map<std::string, std::map<std::string, std::string>> _answers; // <sentenceName,<answerNumber, answerText>>
 		std::map<std::string, std::string> _messages; // <sentenceName, message>
 		std::vector<std::string> _sentences;
 		std::string _currentSentence;
+		GameManager *_gameManager;
 	public:
-		Story(std::string, std::string);
+		Story(std::string, std::string, GameManager*);
 		virtual ~Story();
 		std::string getNextText();
 		std::string answerChosen(std::string);

@@ -9,12 +9,13 @@
 
 class StoryView: public GameScreen, public Observable
 {
-		GameManager *gameManager;
+		GameManager *_gameManager;
 		Story *_story;
 	public:
 		StoryView(std::string, std::string, GameManager*);
 		virtual ~StoryView();
 		void update(std::string);
+		std::string getCurrentSentence();
 	private:
 		bool executeInput(std::string);
 };

@@ -1,0 +1,26 @@
+#This is the monologue for the beginning of the game
+
+SentenceName:text1
+SentenceMessage:In the far and beautiful land "Modgni Kyloh Eht" lives the cruel and strict king "Namtab O'tco gniwolg". His subjects are living in poorness and are starving. For no reason a hero was born to kill the king and to crown the son. But before he can do this, he has to solve a couple of senseless puzzles and quests ...
+SentenceNext:text2
+-
+SentenceName:text2
+SentenceMessage:The hero is a poor and lonely boy. He lives, together with brother "Sadida" and mother "Rehtaf", in a very small house near the very small village called "Metropolis".
+SentenceNext:text3
+-
+SentenceName:text3
+SentenceMessage:One day the priest of the village came and said:\n"You are chosen, come with me!"\nThe hero said:\n"Why?"\nThe priest answered:
+SentenceNext:text4
+-
+SentenceName:text4
+SentenceMessage:"Because you are chosen!"\n"Why?"\n"The holy octo god said so?"\n"When?"\n"Just five minutes ago."\n"Where?"\n"In Metropolis, the glory villa..."\n"I know what Metropolis is but you can't walk like ten miles in five minutes you must have moved approximately 74,5645 miles per hour and thats impossib..."\n"Shut up and come with me!"
+SentenceNext:text5
+-
+SentenceName:text5
+SentenceMessage:So the priest and the hero went to the holy batman house in Metropolis. After arriving the priest asked the god for more instructions and the god said:\n"Kill the glowing octo batman in the holy hall of gniwolg in the mystic land of O'tco where the king, the king we call ..."\n\nThe priest hung up.
+SentenceNext:text6
+-
+SentenceName:text6
+SentenceMessage:"Hey, I want to know the name of the king, nobody knows his name ... and why do you use a phone to speak to god, wtf?!"\n"You think there is a real god? Ha! In R'Lyeh is a guy who is there imprisoned and the state fortune teller. And now go, take my octophone and find the glowing coockie!"\n"You mean: 'And kill the glowing octo batman.'?"\n"Yes ... whatever ..."
+SentenceNext:$exit
+-

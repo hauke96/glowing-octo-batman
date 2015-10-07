@@ -1,10 +1,11 @@
-#include "Draw.h"
-#include <iostream>
+#include <Draw.h>
+#include <GameManager.h>
 #include <fstream>
+#include <iostream>
 
-Draw::Draw()
+Draw::Draw(GameManager *gameManager)
 {
-	//ctor
+	_gameManager = gameManager;
 }
 
 Draw::~Draw()
@@ -64,7 +65,7 @@ void Draw::loadAll()
  */
 void Draw::printMainMenuImage()
 {
-	std::cout << _titleImage << std::endl;
+	_gameManager->printText(_titleImage + "\n");
 }
 
 /** \brief Prints the text of the main menu.
@@ -74,9 +75,7 @@ void Draw::printMainMenuImage()
  */
 void Draw::printMainMenuText()
 {
-	std::cout << "Type S T A R T to start the game." << std::endl
-			<< "If you want to know what glowing-octo-batman is type W T F."
-			<< std::endl;
+	_gameManager->printText("Type S T A R T to start the game.\nIf you want to know what glowing-octo-batman is type W T F.\n");
 }
 
 /** \brief Returns the raw map with its field chars.

@@ -17,7 +17,6 @@ using namespace std;
 
 int main()
 {
-
     GameManager _gameManager;
     _gameManager.start();
     return 0;

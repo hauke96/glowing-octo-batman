@@ -10,7 +10,7 @@
  */
 StoryView::StoryView(std::string storyName, std::string firstSentence, GameManager *gameManager)
 {
-	_story = new Story(storyName, firstSentence);
+	_story = new Story(storyName, firstSentence, gameManager);
 	_story->print();
 }
 StoryView::~StoryView()
@@ -38,4 +38,8 @@ bool StoryView::executeInput(string input)
 		notify(); //exit
 	}
 	else if(_story->getCurrentSentence() != next) _story->setNextText(next);
+}
+std::string StoryView::getCurrentSentence()
+{
+	return _story->getCurrentSentence();
 }
