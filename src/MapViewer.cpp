@@ -59,6 +59,7 @@ void MapViewer::update(std::string input)
 {
 	if(_subMap != NULL)
 	{
+	std::cout << "OK" << std::endl;
 		_subMap->update(input);
 		return;
 	}
@@ -88,6 +89,7 @@ bool MapViewer::executeInput(std::string input)
 
 	if(std::regex_match(input, walk_expr))
 	{
+        std::cout << "OK" << std::endl;
 		if(input.find("left") != std::string::npos
 				|| input.find("west") != std::string::npos
 				|| input.find("West") != std::string::npos)
@@ -114,7 +116,7 @@ bool MapViewer::executeInput(std::string input)
 			if(_selectedField < 60) _selectedField += 10;
 		}
 		_selectedFieldChar = _drawer->getRawMap().at(
-				_selectedField + (_selectedField / 10));
+        _selectedField + (_selectedField / 10));
 	}
 	else if(std::regex_match(input, enter_expr))
 	{
