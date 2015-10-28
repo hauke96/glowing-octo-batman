@@ -3,7 +3,7 @@
 # Empty lines will be ignored
 
 # The structure is like this:
-# 
+#
 SentenceName:mystory
 SentenceMessage:               ____\n             .*    *.\n  such      *  *  ,  *      `  '  ´\n  wow      / .      * \   - *glow* -\n          |__  ʌ__ʌ  __|    ,  .  .\n       .~´´ (_/    \_) ``~.\n      /    ___      ___    \\n      |   (░░░)    (░░░)   |\n      \    ‾‾‾_    _‾‾‾    /\n   /|  ``-../´ `..´ `\..-´´  |\\n  |○|    /  ,     '     \    |○|\n  |○\___/      .     ,   \___/○|\n  \○ ○ ○  ..    /\    ..  ○ ○ ○/\n   `─────´ /   /  \   \ `─────´\n          / ○ /    \ ○ \  3octo5you\n|\      .´ ○ /      \ ○ `.      /|\n\○`.__.´○ ○.´        `.○ ○`.__.´○/\n `○__○_○..´            `..○_○__○´
 SentenceNext:optionalAnswers
@@ -21,6 +21,7 @@ SentenceAnswer:4:wisely
 SentenceNext:1:$exit
 SentenceNext:2:$exit
 #to exit a dialog write $exit as next sentence
+#TODO: to go to an other game screen than the current type $myNewGameScreen instead of $exit
 #
 SentenceNext:3:optionalAnswers
 SentenceNext:4:mystory

@@ -14,6 +14,7 @@ class MapViewer: public GameScreen, public Observer
 		char _selectedFieldChar;
 		std::string _mapGraphics[5][3];
 		SubMapViewer_Village *_subMap;
+		std::string _enterErrorMessage; // when the user is trying to enter an not implemented area, this will contain an error message
 	public:
 		MapViewer(Draw *drawer, GameManager *gameManager);
 		virtual ~MapViewer();

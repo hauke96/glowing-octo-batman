@@ -40,8 +40,12 @@ void MainMenu::update(std::string input)
 		_introView->update(input);
 	}
 
-	if(!executeInput(input) && _introView == NULL) _drawer->printMainMenuText();
-	else if(_introView == NULL) _gameManager->printText("\nType anything to go back ...");
+    bool executedInput = executeInput(input);
+    if(!executedInput) _drawer->printMainMenuText();
+    if(executedInput && _introView == NULL) _gameManager->printText("\nType anything to go back ...");
+
+	//if(!executeInput(input) && _introView == NULL) _drawer->printMainMenuText();
+	//else if(_introView == NULL) _gameManager->printText("\nType anything to go back ...");
 }
 
 /** \brief The given input will be analysed. If the input is usable (matching to an RegEx), a fitting operation will be executed.
@@ -56,25 +60,28 @@ bool MainMenu::executeInput(std::string input)
 	std::regex start_expr("((s|S)(tart))|(START)");
 	std::regex wtf_expr("(wtf|WTF)");
 
-	if(std::regex_match(input, start_expr))
-	{
-		_introView = new StoryView("intro", "text1", _gameManager);
-		executedInput = true;
+    if(_introView == NULL)
+    {
+        if(std::regex_match(input, start_expr))
+        {
+            _introView = new StoryView("intro", "text1", _gameManager);
+            executedInput = true;
+        }
+        else if(std::regex_match(input, wtf_expr))
+        {
+            _gameManager->clearScreen();
+            StoryView wtfStory("wtf", "wtf", _gameManager);
+            wtfStory.update("");
+            _gameManager->printText("glowing-octo-batman is an ASCII based adventure game written in C++.\nYou have to do stuff in this game.\n");
+            executedInput = true;
+        }
 	}
-	else if(std::regex_match(input, wtf_expr))
-	{
-		_gameManager->clearScreen();
-		StoryView wtfStory("wtf", "wtf", _gameManager);
-		wtfStory.update("");
-		_gameManager->printText("glowing-octo-batman is an ASCII based adventure game written in C++.\nYou have to do stuff in this game.\n");
-		executedInput = true;
-	}
-	else if(_introView != NULL && _introView->getCurrentSentence() == "$exit"
-			&& input == "")
-	{
-		MapViewer *mapView = new MapViewer(_drawer, _gameManager);
-		_gameManager->changeGameScreen(mapView);
-	}
+	else if(_introView->getCurrentSentence() == "$exit" && input == "")
+    {
+        MapViewer *mapView = new MapViewer(_drawer, _gameManager);
+        _gameManager->changeGameScreen(mapView);
+        delete this;
+    }
 
 	return executedInput;
 }

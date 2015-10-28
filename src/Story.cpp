@@ -76,7 +76,7 @@ void Story::print()
 	std::vector<std::string> keys = getAllAnswerKeys(_currentSentence);
 	if(keys.size() != 0)
 	{
-		for(int i = 0; i < keys.size(); i++)
+		for(u_int i = 0; i < keys.size(); i++)
 		{
 			_gameManager->printText("  (" + keys.at(i) + ") : " + _answers[_currentSentence].at(keys.at(i)) + "\n");
 		}
@@ -121,7 +121,7 @@ void Story::loadStory(std::string storyName)
 						std::vector<std::string> temp(2);
 						temp.at(0) = parsedLine.at(0);
 						temp.at(1) = parsedLine.at(1);
-						for(int i = 2; i < parsedLine.size(); i++)
+						for(u_int i = 2; i < parsedLine.size(); i++)
 						{
 							temp.at(1) += ':' + parsedLine.at(i);
 						}
@@ -235,7 +235,7 @@ void Story::loadStory(std::string storyName)
  */
 void Story::checkAnswers()
 {
-	for(int i = 0; i < _sentences.size(); i++)
+	for(u_int i = 0; i < _sentences.size(); i++)
 	{
 		std::vector<std::string> allKeys = getAllAnswerKeys(_sentences.at(i));
 

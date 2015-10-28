@@ -20,6 +20,8 @@ MapViewer::MapViewer(Draw *drawer, GameManager *gameManager)
 	_selectedFieldChar = _drawer->getRawMap().at(
 			_selectedField + (_selectedField / 10));
 
+    _enterErrorMessage = "";
+
 	_mapGraphics[0][0] = " ~~~ ";
 	_mapGraphics[0][1] = " ~~~ ";
 	_mapGraphics[0][2] = " ~~~ ";
@@ -59,7 +61,6 @@ void MapViewer::update(std::string input)
 {
 	if(_subMap != NULL)
 	{
-	std::cout << "OK" << std::endl;
 		_subMap->update(input);
 		return;
 	}
@@ -70,7 +71,12 @@ void MapViewer::update(std::string input)
 	_gameManager->print("╙────────────────────────────────────╜\n");
 	renderImage();
 	_gameManager->printText("You are " + getFieldDescription(_selectedFieldChar));
-	_gameManager->printText(" You can E N T E R this area.\n");
+	if(_enterErrorMessage == "")
+	{
+        if(_selectedFieldChar == 'v') _gameManager->printText("You can E N T E R this area.\n");
+        else _gameManager->printText("You can NOT(!) E N T E R this area (yet).\n");
+	}
+	else _gameManager->printText(_enterErrorMessage);
 }
 
 /** \brief Analyses the input of the user. If it matches with an RegEx, the fitting action will be executed.
@@ -89,7 +95,6 @@ bool MapViewer::executeInput(std::string input)
 
 	if(std::regex_match(input, walk_expr))
 	{
-        std::cout << "OK" << std::endl;
 		if(input.find("left") != std::string::npos
 				|| input.find("west") != std::string::npos
 				|| input.find("West") != std::string::npos)
@@ -109,20 +114,30 @@ bool MapViewer::executeInput(std::string input)
 		{
 			if(_selectedField >= 10) _selectedField -= 10;
 		}
-		else if(input.find("down") != std::string::npos
-				|| input.find("south") != std::string::npos
-				|| input.find("South") != std::string::npos)
+		else
+//		 if(input.find("down") != std::string::npos
+//				|| input.find("South") != std::string::npos)
+//				|| input.find("south") != std::string::npos
 		{
 			if(_selectedField < 60) _selectedField += 10;
 		}
+		_enterErrorMessage = "";
 		_selectedFieldChar = _drawer->getRawMap().at(
         _selectedField + (_selectedField / 10));
 	}
 	else if(std::regex_match(input, enter_expr))
 	{
-		_subMap = new SubMapViewer_Village(_drawer, _gameManager);
-		_subMap->attach(this);
-		_gameManager->changeGameScreen(_subMap);
+        if(0 == std::regex_match(_selectedFieldChar + "", std::regex("[1-3]")))
+        {
+            _subMap = new SubMapViewer_Village(_drawer, _gameManager);
+            _subMap->attach(this);
+            _gameManager->changeGameScreen(_subMap);
+		}
+		else
+		{
+            if(_enterErrorMessage == "") _enterErrorMessage = "You can't enter this area yet :(";
+            else _enterErrorMessage = "(╯°□°）╯︵ ┻━┻   I sead you can't!!!1!11!!";
+		}
 	}
 	return false;
 }
