@@ -127,7 +127,7 @@ bool MapViewer::executeInput(std::string input)
 	}
 	else if(std::regex_match(input, enter_expr))
 	{
-        if(0 == std::regex_match(_selectedFieldChar + "", std::regex("[1-3]")))
+        if(std::regex_match(std::string(1, _selectedFieldChar), std::regex("[1-3]")))
         {
             _subMap = new SubMapViewer_Village(_drawer, _gameManager);
             _subMap->attach(this);

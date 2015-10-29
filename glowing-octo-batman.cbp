@@ -40,6 +40,10 @@
 		<Unit filename="include/GameScreen.h" />
 		<Unit filename="include/MainMenu.h" />
 		<Unit filename="include/MapViewer.h" />
+		<Unit filename="include/Observable.h" />
+		<Unit filename="include/Observer.h" />
+		<Unit filename="include/Story.h" />
+		<Unit filename="include/StoryView.h" />
 		<Unit filename="include/SubMapViewer_Village.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="map.txt" />
@@ -52,6 +56,9 @@
 		<Unit filename="src/Story.cpp" />
 		<Unit filename="src/StoryView.cpp" />
 		<Unit filename="src/submaps/SubMapViewer_Village.cpp" />
+		<Unit filename="stories/intro.txt" />
+		<Unit filename="stories/storyExample.txt" />
+		<Unit filename="stories/wtf.txt" />
 		<Unit filename="title.img" />
 		<Extensions>
 			<envvars />
