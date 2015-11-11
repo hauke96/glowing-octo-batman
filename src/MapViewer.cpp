@@ -74,9 +74,7 @@ void MapViewer::update(std::string input)
 	    std::cout << std::regex_match(_selectedFieldChar + "", std::regex("1|2|3")) << " - " << _selectedFieldChar << std::endl;
 	if(_enterErrorMessage == "")
 	{
-	    std::string str = "123";
-	    std::size_t foundFildString = str.find(_selectedFieldChar);
-        if (foundFildString!=std::string::npos) _gameManager->printText("You can E N T E R this area.\n");
+        if(std::regex_match(std::string(1, _selectedFieldChar), std::regex("[1-3]"))) _gameManager->printText("You can E N T E R this area.\n");
         else _gameManager->printText("You can NOT(!) E N T E R this area (yet).\n");
 	}
 	else _gameManager->printText(_enterErrorMessage);
@@ -130,9 +128,7 @@ bool MapViewer::executeInput(std::string input)
 	}
 	else if(std::regex_match(input, enter_expr))
 	{
-	    std::string str = "123";
-	    std::size_t foundFildString = str.find(_selectedFieldChar);
-        if (foundFildString!=std::string::npos)
+        if(std::regex_match(std::string(1, _selectedFieldChar), std::regex("[1-3]")))
         {
             _subMap = new SubMapViewer_Village(_drawer, _gameManager);
             _subMap->attach(this);
