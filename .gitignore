@@ -32,3 +32,5 @@
 /obj/*
 /Debug/*
 /Debug/
+
+build/
