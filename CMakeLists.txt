@@ -9,5 +9,5 @@ include_directories("include/")
 
 add_definitions(-std=c++14)
 
-add_executable(batman "main.cpp" ${SOURCES})
+add_executable(glowing-octo-batman "main.cpp" ${SOURCES})
 
