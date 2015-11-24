@@ -41,8 +41,12 @@ void MainMenu::update(std::string input)
 	}
 
     bool executedInput = executeInput(input);
-    if(!executedInput) _drawer->printMainMenuText();
-    if(executedInput && _introView == NULL) _gameManager->printText("\nType anything to go back ...");
+
+    if( _introView == NULL)
+    {
+        if(!executedInput) _drawer->printMainMenuText();
+        if(executedInput) _gameManager->printText("\nType anything to go back ...");
+    }
 
 	//if(!executeInput(input) && _introView == NULL) _drawer->printMainMenuText();
 	//else if(_introView == NULL) _gameManager->printText("\nType anything to go back ...");

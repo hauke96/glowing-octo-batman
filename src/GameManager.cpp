@@ -26,11 +26,15 @@
 #include <regex>
 #include <stdexcept>
 #include <utility>
+#include <stdio.h>
 
 GameManager::GameManager()
 {
 	// Resize console window:
 	if(OS == "Linux") system("printf '\e[8;38;68t'");
+
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &_winSize);
+
 	//TODO: Create console-rezizement for win and mac as well
 
 	_output = "";
@@ -247,7 +251,7 @@ int GameManager::countSubstring(std::string str, std::string sub)
 void GameManager::fillScreen()
 {
 	_output += "\n";
-	if(36 - std::count(_output.begin(), _output.end(), '\n') - 1 < 0) return;
-	std::string filler(36 - std::count(_output.begin(), _output.end(), '\n'), '\n');
+	if(_winSize.ws_row  - 2 - std::count(_output.begin(), _output.end(), '\n') - 1 < 0) return;
+	std::string filler(_winSize.ws_row - 2 - std::count(_output.begin(), _output.end(), '\n'), '\n');
 	_output += filler;
 }

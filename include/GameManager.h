@@ -3,6 +3,10 @@
 
 #include <string>
 
+#include <sys/ioctl.h>
+#include <stdio.h>
+#include <unistd.h>
+
 class Draw;
 
 class GameScreen;
@@ -11,6 +15,7 @@ class GameManager
 		Draw *_drawer;
 		GameScreen *_gameScreen, *_newGameScreen;
 		std::string _output;
+		winsize _winSize;
 	public:
 		GameManager();
 		virtual ~GameManager();
